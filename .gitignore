@@ -1,0 +1,18 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/NuclearStats/FileContentIndex/2c68cd11-8cfa-4360-b12d-18abf358fad9.vsidx
+<<<<<<< HEAD
+/.vs/NuclearStats/FileContentIndex/6a0892fa-9c14-4bb4-b93b-5571a4ae3b70.vsidx
+=======
+>>>>>>> 6658c9929a62ff8c9e7a25dfb23c285523cbbbe8
+/.vs
+/.vs
+/.vs
+.vs/NuclearStats/v17/DocumentLayout.backup.json
+.vs/NuclearStats/v17/DocumentLayout.json
+All NO dlls/Assembly-CSharp-firstpass.dll
+/.vs
+/bin
+/obj
