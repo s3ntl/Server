@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <LangVersion>9.0</LangVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -63,9 +64,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Z:\SteamLibrary\steamapps\common\Nuclear Option\NuclearOption_Data\Managed\com.rlabrecque.steamworks.net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\s3nt1\Desktop\MaxWasUnavailable.Nuclei\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Dapper.2.1.72\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Mirage, Version=151.2.11.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -130,17 +133,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\s3nt1\Desktop\MaxWasUnavailable.Nuclei\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\s3nt1\Desktop\MaxWasUnavailable.Nuclei\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\s3nt1\Desktop\MaxWasUnavailable.Nuclei\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\s3nt1\Desktop\MaxWasUnavailable.Nuclei\System.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -173,11 +174,17 @@
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>Library\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.1.0, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>packages\WebSocketSharp-netstandard.1.0.1\lib\net45\websocket-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviours\IRSeekerBehaviour.cs" />
     <Compile Include="Database\IDatabase.cs" />
     <Compile Include="DDOSProtection.cs" />
+    <Compile Include="IPC\IPCService.cs" />
+    <Compile Include="IPC\CommandWebSocketBehavior.cs" />
+    <Compile Include="IPC\StatsWebSocketBehavior.cs" />
     <Compile Include="Patches\Patch.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="CommandService\CommandService.cs" />
@@ -200,7 +207,6 @@
     <Compile Include="Data\ARHSeekerData.cs" />
     <Compile Include="Data\DamageData.cs" />
     <Compile Include="Data\IRSeekerData.cs" />
-    <Compile Include="NetworkLayer\Network.cs" />
     <Compile Include="Patches\AircraftPatches.cs" />
     <Compile Include="Patches\ARHSeekerPatch.cs" />
     <Compile Include="Patches\IRSeekerPatch.cs" />
@@ -208,12 +214,16 @@
     <Compile Include="Patches\NetworkManagerNuclearOptionPatch.cs" />
     <Compile Include="Patches\PlayerPatch.cs" />
     <Compile Include="Data\PlayerData.cs" />
-    <Compile Include="RCON\RCON.cs" />
     <Compile Include="Services\AIService.cs" />
     <Compile Include="Services\FactionHQPatch.cs" />
     <Compile Include="Services\PersonalOppressionMode.cs" />
     <Compile Include="Services\PlayerService.cs" />
     <Compile Include="Services\CustomSpawner.cs" />
+    <Compile Include="Upgrades\IUpgrade.cs" />
+    <Compile Include="Upgrades\TestUpgrade.cs" />
+    <Compile Include="Upgrades\UpgradeManager.cs" />
+    <Compile Include="Upgrades\UpgradeType.cs" />
+    <Compile Include="Upgrades\MissileMotorReflection.cs" />
     <Compile Include="Utils\PlayerUtils.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -221,6 +231,13 @@
     <Compile Include="Utils\ServerUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\POMDatabase.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Database\POMDatabase_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>POMDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="Needed dlls\0Harmony.dll" />
     <Content Include="Needed dlls\BepInEx.dll" />
     <Content Include="Needed dlls\Nuclei.dll" />
@@ -229,152 +246,6 @@
     <Content Include="Needed dlls\UnityEngine.InputLegacyModule.dll" />
     <Content Include="Needed dlls\UnityEngine.InputModule.dll" />
     <Content Include="Needed dlls\UnityEngine.PhysicsModule.dll" />
-    <Content Include="All NO dlls\Accessibility.dll" />
-    <Content Include="All NO dlls\com.rlabrecque.steamworks.net.dll" />
-    <Content Include="All NO dlls\Interop.SpeechLib.dll" />
-    <Content Include="All NO dlls\JamesFrowen.Build.Runtime.dll" />
-    <Content Include="All NO dlls\JamesFrowen.Graphy.dll" />
-    <Content Include="All NO dlls\JamesFrowen.ScriptableVariables.dll" />
-    <Content Include="All NO dlls\Mirage.Authenticators.dll" />
-    <Content Include="All NO dlls\Mirage.Components.dll" />
-    <Content Include="All NO dlls\Mirage.dll" />
-    <Content Include="All NO dlls\Mirage.SocketLayer.dll" />
-    <Content Include="All NO dlls\Mirage.Sockets.Udp.dll" />
-    <Content Include="All NO dlls\Mirage.SteamworksSocket.dll" />
-    <Content Include="All NO dlls\Mono.Data.Sqlite.dll" />
-    <Content Include="All NO dlls\Mono.Posix.dll" />
-    <Content Include="All NO dlls\Mono.Security.dll" />
-    <Content Include="All NO dlls\Mono.WebBrowser.dll" />
-    <Content Include="All NO dlls\mscorlib.dll" />
-    <Content Include="All NO dlls\netstandard.dll" />
-    <Content Include="All NO dlls\Novell.Directory.Ldap.dll" />
-    <Content Include="All NO dlls\Ookii.Dialogs.dll" />
-    <Content Include="All NO dlls\ProfanityDetector.dll" />
-    <Content Include="All NO dlls\Rewired_Core.dll" />
-    <Content Include="All NO dlls\Rewired_Windows.dll" />
-    <Content Include="All NO dlls\RuntimeTransformHandle.dll" />
-    <Content Include="All NO dlls\StandaloneFileBrowser.dll" />
-    <Content Include="All NO dlls\System.ComponentModel.Composition.dll" />
-    <Content Include="All NO dlls\System.ComponentModel.DataAnnotations.dll" />
-    <Content Include="All NO dlls\System.Configuration.dll" />
-    <Content Include="All NO dlls\System.Core.dll" />
-    <Content Include="All NO dlls\System.Data.DataSetExtensions.dll" />
-    <Content Include="All NO dlls\System.Data.dll" />
-    <Content Include="All NO dlls\System.Design.dll" />
-    <Content Include="All NO dlls\System.DirectoryServices.dll" />
-    <Content Include="All NO dlls\System.dll" />
-    <Content Include="All NO dlls\System.Drawing.Design.dll" />
-    <Content Include="All NO dlls\System.Drawing.dll" />
-    <Content Include="All NO dlls\System.EnterpriseServices.dll" />
-    <Content Include="All NO dlls\System.IO.Compression.dll" />
-    <Content Include="All NO dlls\System.IO.Compression.FileSystem.dll" />
-    <Content Include="All NO dlls\System.Net.Http.dll" />
-    <Content Include="All NO dlls\System.Numerics.dll" />
-    <Content Include="All NO dlls\System.Runtime.dll" />
-    <Content Include="All NO dlls\System.Runtime.Serialization.dll" />
-    <Content Include="All NO dlls\System.Runtime.Serialization.Formatters.Soap.dll" />
-    <Content Include="All NO dlls\System.Security.dll" />
-    <Content Include="All NO dlls\System.ServiceModel.Internals.dll" />
-    <Content Include="All NO dlls\System.Transactions.dll" />
-    <Content Include="All NO dlls\System.Web.ApplicationServices.dll" />
-    <Content Include="All NO dlls\System.Web.dll" />
-    <Content Include="All NO dlls\System.Web.Services.dll" />
-    <Content Include="All NO dlls\System.Windows.Forms.dll" />
-    <Content Include="All NO dlls\System.Xml.dll" />
-    <Content Include="All NO dlls\System.Xml.Linq.dll" />
-    <Content Include="All NO dlls\UniTask.Addressables.dll" />
-    <Content Include="All NO dlls\UniTask.dll" />
-    <Content Include="All NO dlls\UniTask.DOTween.dll" />
-    <Content Include="All NO dlls\UniTask.Linq.dll" />
-    <Content Include="All NO dlls\UniTask.TextMeshPro.dll" />
-    <Content Include="All NO dlls\Unity.Addressables.dll" />
-    <Content Include="All NO dlls\Unity.AI.Navigation.dll" />
-    <Content Include="All NO dlls\Unity.Animation.Rigging.dll" />
-    <Content Include="All NO dlls\Unity.Animation.Rigging.DocCodeExamples.dll" />
-    <Content Include="All NO dlls\Unity.Burst.dll" />
-    <Content Include="All NO dlls\Unity.Burst.Unsafe.dll" />
-    <Content Include="All NO dlls\Unity.InputSystem.dll" />
-    <Content Include="All NO dlls\Unity.InputSystem.ForUI.dll" />
-    <Content Include="All NO dlls\Unity.InputSystem.RebindingUI.dll" />
-    <Content Include="All NO dlls\Unity.Mathematics.dll" />
-    <Content Include="All NO dlls\Unity.RenderPipeline.Universal.ShaderLibrary.dll" />
-    <Content Include="All NO dlls\Unity.RenderPipelines.Core.Runtime.dll" />
-    <Content Include="All NO dlls\Unity.RenderPipelines.Core.ShaderLibrary.dll" />
-    <Content Include="All NO dlls\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll" />
-    <Content Include="All NO dlls\Unity.RenderPipelines.Universal.Runtime.dll" />
-    <Content Include="All NO dlls\Unity.RenderPipelines.Universal.Shaders.dll" />
-    <Content Include="All NO dlls\Unity.ResourceManager.dll" />
-    <Content Include="All NO dlls\Unity.ScriptableBuildPipeline.dll" />
-    <Content Include="All NO dlls\Unity.TextMeshPro.dll" />
-    <Content Include="All NO dlls\UnityEngine.AccessibilityModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.AIModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.AndroidJNIModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.AnimationModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ARModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.AssetBundleModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.AudioModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ClothModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ClusterInputModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ClusterRendererModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ContentLoadModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.CoreModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.CrashReportingModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.DirectorModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.dll" />
-    <Content Include="All NO dlls\UnityEngine.DSPGraphModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.GameCenterModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.GIModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.GridModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.HotReloadModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ImageConversionModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.IMGUIModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.InputLegacyModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.InputModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.JSONSerializeModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.LocalizationModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.NVIDIAModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ParticleSystemModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.PerformanceReportingModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.Physics2DModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.PhysicsModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ProfilerModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.PropertiesModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.ScreenCaptureModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.SharedInternalsModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.SpriteMaskModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.SpriteShapeModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.StreamingModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.SubstanceModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.SubsystemsModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.TerrainModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.TerrainPhysicsModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.TextCoreFontEngineModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.TextCoreTextEngineModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.TextRenderingModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.TilemapModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.TLSModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UI.dll" />
-    <Content Include="All NO dlls\UnityEngine.UIElementsModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UIModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UmbraModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityAnalyticsCommonModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityAnalyticsModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityConnectModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityCurlModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityTestProtocolModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityWebRequestAssetBundleModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityWebRequestAudioModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityWebRequestModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityWebRequestTextureModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.UnityWebRequestWWWModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.VehiclesModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.VFXModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.VideoModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.VirtualTexturingModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.VRModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.WindModule.dll" />
-    <Content Include="All NO dlls\UnityEngine.XRModule.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -382,6 +253,7 @@
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="obj\Debug\Replay Mod.csproj.AssemblyReference.cache" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="obj\Debug\TempPE\" />

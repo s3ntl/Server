@@ -16,7 +16,7 @@ namespace ServerTools.Commands
         {
         }
 
-        public override string Name { get; } = "rename";
+        public override string Name { get; } = "test";
 
         public override string Description { get; } = "";
 
@@ -26,30 +26,16 @@ namespace ServerTools.Commands
 
         public override bool Execute(Player player, string[] args)
         {
-            string identifier = string.Join(" ", args);
-
-            Player targetPlayer;
-
-            if (!PlayerUtils.TryFindPlayer(identifier, out targetPlayer))
-            {
-                ChatService.SendServerMessage("Could not find a player with that ID or name.", player);
-                return false;
-            }
-
-            if (targetPlayer == null)
-            {
-                ChatService.SendServerMessage("No such player is currently online.", player);
-                return false;
-            }
-
-            PlayerUtils.SetPlayerName(player, "TEST");
+            string factionName = args[0];
+            FactionHQ faction = FactionRegistry.HqFromName(factionName);
+            if (faction != null) faction.DeclareEndGame(NuclearOption.SavedMission.ObjectiveV2.Outcomes.EndType.Victory);
 
             return false;
         }
 
         public override bool Validate(Player player, string[] args)
         {
-            if (args.Length < 1) return false;
+            if (args.Length != 1) return false;
             return true;
         }
     }

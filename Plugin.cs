@@ -7,10 +7,12 @@ using System;
 using System.Linq;
 using ServerTools.Commands;
 using System.IO;
-using ServerTools.Data.NetworkLayer;
+using ServerTools.Data;
 using ServerTools.Services;
 using System.Runtime.CompilerServices;
 using System.Timers;
+using ServerTools.Database;
+using ServerTools.Upgrades;
 
 
 namespace ServerTools
@@ -32,7 +34,10 @@ namespace ServerTools
         public static ConfigEntry<string> PathToBanList { get; private set; }
         public static List<string> Bans { get; private set; }
 
-        public static Network NetworkInstance;
+        public static IDatabase _POMDatabase;
+        public static ConfigEntry<string> ConfigPathToPOMDatabase { get; private set; }
+        public static string PathToPOMDatabase;
+
         public void Awake()
         {
             try
@@ -41,7 +46,7 @@ namespace ServerTools
                 Harmony harmony = new Harmony("ServerTools");
                 harmony.PatchAll();
                 InitConfig();
-                Init();
+                InitServices();
                 AdminsIDS = ParseList(Admins.Value);
                 ModeratorsIDS = ParseList(Moderators.Value);
 
@@ -83,13 +88,17 @@ namespace ServerTools
             } 
         }
 
-        private void Init()
+     
+
+        private void InitServices()
         {
             PlayerService.Awake();
             ChatService.Awake();
             PersonalOppressionMode.Awake();
-            
+            UpgradeManager.Instance.Awake();
         }
+
+        
 
         private void RegisterCommands()
         {
@@ -119,8 +128,9 @@ namespace ServerTools
             Owner = Config.Bind<string>("Permissions", "Owner", "", "Server moderators. ");
 
 
-            
             PathToBanList = Config.Bind<string>("Ban System", "Path to ban list file", "", "");
+            ConfigPathToPOMDatabase = Config.Bind<string>("Databases", "Path to POM db", "", "");
+            PathToPOMDatabase = ConfigPathToPOMDatabase.Value;
         }
         private static List<string> ParseList(string input)
         {

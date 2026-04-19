@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ServerTools.Database
 {
-    internal interface IDatabase
+    public interface IDatabase
     {
+        string ConnectionString { get; set; }
+
+        void Init(string PathToDatabase);
+
+        
     }
 }

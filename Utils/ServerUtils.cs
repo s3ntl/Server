@@ -39,7 +39,7 @@ namespace ServerTools.Utils
         public static void BanOffline(ulong id)
         {
             NetworkManagerNuclearOption.i.Authenticator.BanList.Add(new CSteamID(id), "mamy ebal");
-            
+           
         }
     }
 }

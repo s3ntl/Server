@@ -1,13 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HarmonyLib;
 
 namespace ServerTools.Patches
 {
+    [HarmonyPatch(typeof(Missile))]
     public class MissilePatch
     {
-
+        public static Action<Missile> OnMissileAwake;
+        [HarmonyPatch("Awake")]
+        [HarmonyPostfix]
+        public static void AwakePostfix(Missile __instance)
+        {
+            OnMissileAwake?.Invoke(__instance);
+        }
     }
 }

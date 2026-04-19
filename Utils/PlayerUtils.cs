@@ -73,7 +73,7 @@ namespace ServerTools.Utils
             }
         } 
 
-        public static void SetPlayerName(Player player, string name)
+        public static void SetPlayerName(Player player, string name) //не работает короче
         {
             string newName = name.SanitizeRichText(32).ReplaceCharactersNotInFont(GameAssets.i.playerNameFont);
 
