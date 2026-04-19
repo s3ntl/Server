@@ -16,31 +16,48 @@ namespace ServerTools.Upgrades
 
         public void Apply(Unit unit)
         {
-            if (!(unit is Missile missile)) return;
-            if (!missile.unitName.ToLower().Contains("aam-29")) return; 
-            missile.airDensity *= 0.5f;
-            
-            ReflectionUtils.WritePrivateField<float>("supersonicDrag", 
-                ReflectionUtils.ReadPrivateField<float>("supersonicDrag", missile) * 0.01f, missile);
 
-            ReflectionUtils.WritePrivateField<float>("blastYield",
-                ReflectionUtils.ReadPrivateField<float>("blastYield", missile) * 1000, missile);
+            try
+            {
+                
+                if (!(unit is Missile missile)) return;
+                
+                if (!missile.definition.unitName.ToLower().Contains("aam-29")) return;
+                Plugin.logger.LogInfo("3");
 
-            ApplyMotorUpgrade(missile);
+                ReflectionUtils.WritePrivateField<float>("supersonicDrag",
+                    ReflectionUtils.ReadPrivateField<float>("supersonicDrag", missile) * 0.01f, missile);
+                Plugin.logger.LogInfo("4");
+                ReflectionUtils.WritePrivateField<float>("blastYield",
+                    ReflectionUtils.ReadPrivateField<float>("blastYield", missile) * 1000, missile);
+                Plugin.logger.LogInfo("5");
+                ApplyMotorUpgrade(missile);
+            }
+            catch (Exception e)
+            {
+                Plugin.logger.LogInfo($"Error in upgrade apply: {e.Message}");
+            }
         }
 
         private void ApplyMotorUpgrade(Missile missile)
         {
+
             try
             {
-                float thrust = MissileMotorReflection.GetThrust(missile);
+                Plugin.logger.LogInfo("6");
+                
                 object[] motors = MissileMotorReflection.GetMotors(missile);
-                foreach (var motor in motors) MissileMotorReflection.SetThrust(motor, thrust * 50);
+                foreach (var motor in motors)
+                {
+                    float thrust = MissileMotorReflection.GetThrust(motor);
+                    MissileMotorReflection.SetThrust(motor, thrust * 50);
+                }
             }
             catch (Exception ex)
             {
                 Plugin.logger.LogError(ex.Message);
             }
+            
         }
     }
 }

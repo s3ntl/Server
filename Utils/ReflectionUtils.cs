@@ -25,7 +25,7 @@ namespace ServerTools.Utils
             fieldInfo.SetValue(obj, value);
         }
 
-        // Создание делегата для вызова приватных методов IRSeeker
+        
         public static Delegate CreatePrivateMethodDelegate(Type delegateType, string methodName, object obj)
         {
             MethodInfo methodInfo = obj.GetType().GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);

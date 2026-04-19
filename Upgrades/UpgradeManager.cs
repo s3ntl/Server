@@ -37,7 +37,7 @@ namespace ServerTools.Upgrades
         }
         private void Subscribe()
         {
-            Patches.MissilePatch.OnMissileAwake += OnMissileAwake;
+            Patches.MissilePatch.OnAwakeMissile += OnMissileAwake;
         }
         private async void OnPlayerJoinedAsync(Player player)
         {
