@@ -41,7 +41,7 @@ namespace ServerTools.Commands
             if (!PlayerService.TryGetPlayer(identificator, out Player target)) return false;
             if (!Int32.TryParse(count, out int result)) return false;
             if (!PlayerService.TryGetPlayer(owner, out Player ownerObject)) Plugin.logger.LogInfo("No owner");
-            Plugin.logger.LogInfo("Starting missile spawn");
+            Plugin.IPCLog("Starting missile spawn", this);
             CustomSpawner.SpawnMissilesAtPlayer(missileName, result, target, ownerObject);
             return true;
         }

@@ -2,6 +2,7 @@
 using Mirage;
 using NuclearOption.Chat;
 using NuclearOption.Networking;
+using ServerTools.Upgrades;
 
 namespace ServerTools.Commands
 {
@@ -15,7 +16,7 @@ namespace ServerTools.Commands
             Player player;
             if (!sender.TryGetPlayer(out player))
             {
-                Plugin.logger.LogWarning("Player component is null");
+                Plugin.IPCLog("Player component is null");
                 return true;
             }
 
@@ -26,11 +27,12 @@ namespace ServerTools.Commands
                 {
                     return false;
                 }
+                
                 return false;
             }
 
-            if (!allChat) Plugin.logger.LogInfo($"Player {player.PlayerName} sent message: {message}");
-            else Plugin.logger.LogInfo($"Player {player.PlayerName} sent message to faction chat: {message}");
+            if (!allChat) Plugin.IPCLog($"Player {player.PlayerName} sent message: {message}");
+            else Plugin.IPCLog($"Player {player.PlayerName} sent message to faction chat: {message}");
             return true;
         }
     }

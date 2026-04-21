@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Reflection;
+using ImprovedMissiles.Utils;
 using UnityEngine;
 
-namespace ServerTools.Behaviours
+namespace ImprovedMissiles.States
 {
     public abstract class IRSeekerBehaviour
     {

@@ -72,7 +72,7 @@ namespace ServerTools.Commands
 
 
 
-            Plugin.logger.LogInfo($"Player {player.PlayerName} gave {amount} coins to player {targetPlayer.PlayerName} ({targetPlayer.SteamID}).");
+            Plugin.IPCLog($"Player {player.PlayerName} gave {amount} coins to player {targetPlayer.PlayerName} ({targetPlayer.SteamID}).", this);
 
 
             return true;

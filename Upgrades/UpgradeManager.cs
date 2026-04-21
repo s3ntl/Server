@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.SqlServer;
 using Dapper;
 using NuclearOption.Networking;
-using Microsoft.SqlServer.Server;
+using ServerTools.Upgrades.ConcreteUpgrades;
 
 namespace ServerTools.Upgrades
 {
@@ -30,6 +27,7 @@ namespace ServerTools.Upgrades
         {
             Subscribe();
             RegisterUpgrade(new TestUpgrade());
+            RegisterUpgrade(new TestUpgrade2());
         }
         private void RegisterUpgrade(IUpgrade upgrade)
         {
@@ -51,7 +49,6 @@ namespace ServerTools.Upgrades
 
                 foreach (var model in models)
                 {
-                    
                     if (TryGetUpgrade(model, out var upgrade))
                         upgrades.Add(upgrade);
                 }
@@ -89,7 +86,7 @@ namespace ServerTools.Upgrades
 
         public class MissileUpgradeModel
         {
-            public ulong SteamID;
+            public ulong SteamId;
             public string Name;
         }
         public async Task<IEnumerable<MissileUpgradeModel>> GetMissileUpgradesBySteamIdAsync(ulong steamId)

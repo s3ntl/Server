@@ -13,6 +13,9 @@ using System.Runtime.CompilerServices;
 using System.Timers;
 using ServerTools.Database;
 using ServerTools.Upgrades;
+using ServerTools.IPC;
+using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 
 namespace ServerTools
@@ -75,6 +78,7 @@ namespace ServerTools
                 //    i++;
                 //}
 
+                IPCService.Start(10042);
                 
 
                 System.Timers.Timer timer = new System.Timers.Timer(3000);
@@ -113,7 +117,7 @@ namespace ServerTools
             CommandService.RegisterChatCommand(new SupressClientCommand(this.Config));
             CommandService.RegisterChatCommand(new SpawnCommand(this.Config));
             CommandService.RegisterChatCommand(new SayCommand(this.Config));
-
+            CommandService.RegisterChatCommand(new TpTestCommand(this.Config));
         }
         private void LateInit(object sender, ElapsedEventArgs e)
         {
@@ -144,7 +148,7 @@ namespace ServerTools
             string ids = string.Empty;
             foreach (var line in File.ReadAllLines(path))
             {
-                ids += line;
+                ids += line + ';';
             }
             return ParseList(ids);
         }
@@ -155,6 +159,26 @@ namespace ServerTools
            
         }
 
+        public static void IPCLog(string msg, object sender = null)
+        {
+            if (sender != null)
+            {
+                if (sender is string) msg = $"[{sender}]: {msg}";
+                else
+                    msg = $"[{sender.GetType().Name}]: {msg}";
+            }
+            //Plugin.logger.LogWarning($"[DEBUG INFO]{msg}");
+            try
+            {
+                IPCService.BroadcastChannel("/stats", msg);
+            }
+            catch (Exception e)
+            {
+                Plugin.logger.LogError(e);
+            }
+        }
+
+        
         public void FixedUpdate()
         {
             

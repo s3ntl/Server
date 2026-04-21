@@ -46,7 +46,7 @@ namespace ServerTools.Commands
 
         public static bool TryGetCommand(string commandName, out ICommand command)
         {
-            Plugin.logger.LogInfo($"Trying to get command {commandName}. Total commands in list: {commands.Count}" +
+            Plugin.IPCLog($"[CommandService] Trying to get command {commandName}. Total commands in list: {commands.Count}" +
                 $"\nCommand 1: {commands[0].Name}");
             command = commands.Find((ICommand c) => string.Equals(c.Name,commandName, StringComparison.CurrentCultureIgnoreCase));
             return command != null;
@@ -59,30 +59,30 @@ namespace ServerTools.Commands
             {
                 line += arg + " ";
             }
-            Plugin.logger.LogInfo($"Trying to execute command {commandName}, args {line}");
+            Plugin.IPCLog($"[CommandService] Trying to execute command {commandName}, args {line}");
             ICommand command;
             if (!TryGetCommand(commandName, out command))
             {
-                Plugin.logger.LogWarning($"Command {commandName} not found.");
+                Plugin.IPCLog($"[CommandService] Command {commandName} not found.");
                 return false;
             }
             if (GetPermissionLevel(player) < command.PermissionLevelDefault)
             {
-                Plugin.logger.LogWarning($"Player {player.PlayerName} tried to execute {commandName} with no permissions");
+                Plugin.IPCLog($"[CommandService] Player {player.PlayerName} tried to execute {commandName} with no permissions");
                 return false;
             }
             if (!command.Validate(player, args))
             {
-                Plugin.logger.LogWarning($"Command {commandName} by player {player.PlayerName} not validated. Args: {args}");
+                Plugin.IPCLog($"[CommandService] Command {commandName} by player {player.PlayerName} not validated. Args: {args}");
                 return false;
             }
-            Plugin.logger.LogInfo($"Begining execute command {commandName}");
+            Plugin.IPCLog($"[CommandService] Begining execute command {commandName}");
             if (command.Execute(player, args))
             {
-                Plugin.logger.LogWarning($"Command {commandName} executed by {player.PlayerName}. Args: {args}");
+                Plugin.IPCLog($"[CommandService] Command {commandName} executed by {player.PlayerName}. Args: {args}");
                 return true;
             }
-            Plugin.logger.LogError($"Unknown error, command: {commandName}, args: {args}");
+            Plugin.IPCLog($"[CommandService] Unknown error, command: {commandName}, args: {args}");
             return false;
         }
         public static bool TryExecuteCommand(Player player, string message)

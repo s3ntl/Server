@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HarmonyLib;
+using ServerTools.IPC;
 using ServerTools.Utils;
 
-namespace ServerTools.Upgrades
+namespace ServerTools.Upgrades.ConcreteUpgrades
 {
     public class TestUpgrade : IUpgrade
     {
@@ -23,15 +24,17 @@ namespace ServerTools.Upgrades
                 if (!(unit is Missile missile)) return;
                 
                 if (!missile.definition.unitName.ToLower().Contains("aam-29")) return;
-                Plugin.logger.LogInfo("3");
+                
 
                 ReflectionUtils.WritePrivateField<float>("supersonicDrag",
-                    ReflectionUtils.ReadPrivateField<float>("supersonicDrag", missile) * 0.01f, missile);
-                Plugin.logger.LogInfo("4");
+                    ReflectionUtils.ReadPrivateField<float>("supersonicDrag", missile) * 0.4f, missile);
+                
                 ReflectionUtils.WritePrivateField<float>("blastYield",
-                    ReflectionUtils.ReadPrivateField<float>("blastYield", missile) * 1000, missile);
-                Plugin.logger.LogInfo("5");
+                    ReflectionUtils.ReadPrivateField<float>("blastYield", missile) * 3.3f, missile);
+                
                 ApplyMotorUpgrade(missile);
+
+                IPCService.BroadcastChannel("/weaponTest", $"Speed+blastdmg upgrade applied to missile {missile.definition.unitName}");
             }
             catch (Exception e)
             {
@@ -44,13 +47,14 @@ namespace ServerTools.Upgrades
 
             try
             {
-                Plugin.logger.LogInfo("6");
                 
-                object[] motors = MissileMotorReflection.GetMotors(missile);
+                
+                object[] motors = MissileHelper.GetMotors(missile);
                 foreach (var motor in motors)
                 {
-                    float thrust = MissileMotorReflection.GetThrust(motor);
-                    MissileMotorReflection.SetThrust(motor, thrust * 50);
+                    float thrust = MissileHelper.GetThrust(motor);
+                    MissileHelper.SetThrust(motor, thrust * 1.5f);
+                    MissileHelper.SetThrustVectoring(motor, 30);
                 }
             }
             catch (Exception ex)
